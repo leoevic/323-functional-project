@@ -1,6 +1,4 @@
-package movieDB
-
-import java.util.Scanner
+package filmDB
 
 
 

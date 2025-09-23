@@ -1,4 +1,4 @@
-package movieDB.models
+package filmDB.models
 
 object ActorModel {
 
