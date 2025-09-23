@@ -1,4 +1,4 @@
-package MovieDB
+package movieDB
 
 import java.util.Scanner
 
