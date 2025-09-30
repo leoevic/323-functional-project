@@ -15,5 +15,5 @@ case class Movie(id: Int, name: String, releaseYear: Int, budgetInMillions: BigD
    * @return String
    */
   override def toString: String =
-    f"Film $this.id - $this.name: Erschienen $this.releaseYear, Kostenpunkt: USD ${this.budgetInMillions}%.2f"
+    f"Film ${this.id} - ${this.name}: Erschienen ${this.releaseYear}, Kostenpunkt: USD M${this.budgetInMillions}%.2f"
 }

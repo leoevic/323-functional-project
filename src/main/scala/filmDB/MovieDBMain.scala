@@ -1,9 +1,11 @@
 package filmDB
 
-import datatypes.Movie;
-import datatypes.Actor;
-import models.MovieModel;
-import models.ActorModel;
+import datatypes.Movie
+import datatypes.Actor
+import models.MovieModel
+import models.ActorModel
+
+import scala.language.postfixOps;
 
 /**
  * Main function
@@ -79,9 +81,9 @@ def menu(): Int =
  */
 def showAllMovies(): Unit = {
   println("Übersicht über alle Filme")
-  val moviesAsString = MovieModel.getMovies(None).map(_.toString)
+  val moviesAsString = MovieModel.getMovies(None)
   if moviesAsString != Nil then
-    moviesAsString.foreach(println)
+    moviesAsString.map(_.toString).foreach(println)
   else
     println("Keine Filme verfügbar")
 }
@@ -96,11 +98,33 @@ def showMovieInformation(): Unit =
 
 
 /**
- * TODO: Add a movie
+ * Add a movie
  * @return Unit
  */
-def addMovie(): Unit =
-  println("TODO")
+def addMovie(): Unit = {
+  println("Film hinzufügen")
+  println("Geben Sie die Film-ID ein:")
+  val filmId = scala.io.StdIn.readInt()
+
+  println("Geben Sie den Filmnamen ein:")
+  val filmName = scala.io.StdIn.readLine()
+
+  println("Geben Sie das Erscheinungsjahr ein:")
+  val filmReleaseYear = scala.io.StdIn.readInt()
+
+  println("Geben Sie den Kostenpunkt an (in Millionen USD):")
+  val filmBudgetInMillions = BigDecimal(scala.io.StdIn.readDouble())
+
+  // Check whether a movie with the same id already exists
+  val movieFilter = (movie: Movie) => movie.id == filmId
+  if MovieModel.getMovies(Some(movieFilter)).nonEmpty then {
+    Console.err.println("Es existiert bereits ein Film mit dieser ID")
+    return
+  }
+
+  // Create movie
+  MovieModel.addMovie(filmId, filmName, filmReleaseYear, filmBudgetInMillions)
+}
 
 
 /**
