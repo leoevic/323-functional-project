@@ -56,8 +56,13 @@ object MovieModel {
    * @param newMovie
    * @param filter
    */
-  def editMovie(newMovie: Movie, filter: Option[(Movie => Boolean)]): Unit =
+  def editMovie(newMovie: Movie, filter: Option[(Movie => Boolean)]): Unit = {
     filter match
       case None => this.movies.mapInPlace(_ => newMovie)
-      case Some(f) => this.movies.filter(f).mapInPlace(_ => newMovie)
+      case Some(filterValue) => this.movies.mapInPlace { movie =>
+        if filterValue(movie) then
+          newMovie
+        else movie
+      }
+  }
 }

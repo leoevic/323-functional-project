@@ -6,6 +6,7 @@ import models.MovieModel
 import models.ActorModel
 
 import scala.language.postfixOps;
+import java.lang.Double.parseDouble
 
 /**
  * Main function
@@ -90,7 +91,7 @@ def showAllMovies(): Unit = {
 
 
 /**
- * TODO: Show information about a specific movie
+ * Show information about a specific movie
  * @return Unit
  */
 def showMovieInformation(): Unit =
@@ -102,7 +103,7 @@ def showMovieInformation(): Unit =
   val movieList = MovieModel.getMovies(Some(filter))
   if movieList.isEmpty then {
     println("Dieser Film existiert nicht.")
-    return;
+    return
   }
 
   // Show movie information
@@ -145,11 +146,59 @@ def addMovie(): Unit = {
 
 
 /**
- * TODO: Edit a movie
+ * Edit a movie
  * @return Unit
  */
-def editMovie(): Unit =
-  println("TODO")
+def editMovie(): Unit = {
+  println("Bitte geben Sie die Film-ID ein:")
+  val filmId = scala.io.StdIn.readInt()
+
+  // Get movie
+  val filter = (movie: Movie) => movie.id == filmId
+  val movieList = MovieModel.getMovies(Some(filter))
+  if movieList.isEmpty then {
+    println("Dieser Film existiert nicht.")
+    return
+  }
+
+  // Get the movie itself
+  val movieCurrent = movieList.head
+
+  // Show current movie information
+  println("Bisherige Film-Informationen")
+  println(s"Name: ${movieCurrent.name}")
+  println(s"Erscheinungsjahr: ${movieCurrent.releaseYear}")
+  println(f"Budget in Millionen USD: ${movieCurrent.budgetInMillions}%.2f")
+
+  // Edit info
+  // Name
+  println("Neuer Filmname (Leer lassen für keine Änderung)")
+  var newFilmName = scala.io.StdIn.readLine()
+  if newFilmName.isEmpty then
+    newFilmName = movieCurrent.name
+
+  // Release year
+  println("Neues Erscheinungsjahr (Leer lassen für keine Änderung)")
+  var newFilmReleaseYearInput = scala.io.StdIn.readLine()
+  var newFilmReleaseYear: Int = 0
+  if newFilmReleaseYearInput.nonEmpty then
+    newFilmReleaseYear = newFilmReleaseYearInput.toInt
+  else
+    newFilmReleaseYear = movieCurrent.releaseYear
+
+  // Budget in millions
+  println("Neues Budget in Millionen (Leer lassen für keine Änderung")
+  var newFilmBudgetInMillionsInput = scala.io.StdIn.readLine()
+  var newFilmBudgetInMillions: BigDecimal = BigDecimal(0)
+  if newFilmBudgetInMillionsInput.nonEmpty then
+    newFilmBudgetInMillions = BigDecimal(parseDouble(newFilmBudgetInMillionsInput))
+  else
+    newFilmBudgetInMillions = movieCurrent.budgetInMillions
+
+  // Prepare the filter function
+  val replaceFilter = (movie: Movie) => movie.id == filmId
+  MovieModel.editMovie(Movie(filmId, newFilmName, newFilmReleaseYear, newFilmBudgetInMillions), Some(replaceFilter))
+}
 
 
 /**
