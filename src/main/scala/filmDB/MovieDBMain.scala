@@ -82,9 +82,9 @@ def menu(): Int =
  */
 def showAllMovies(): Unit = {
   println("Übersicht über alle Filme")
-  val moviesAsString = MovieModel.getMovies(None)
-  if moviesAsString != Nil then
-    moviesAsString.map(_.toString).foreach(println)
+  val movies = MovieModel.getMovies(None)
+  if movies != Nil then
+    movies.map(_.toString).foreach(println)
   else
     println("Keine Filme verfügbar")
 }
@@ -229,11 +229,17 @@ def deleteMovie(): Unit =
 
 
 /**
- * TODO: Show all actors
+ * Show all actors
  * @return Unit
  */
-def showAllActors(): Unit =
-  println("TODO")
+def showAllActors(): Unit = {
+  println("Übersicht über alle Schauspieler")
+  val actors = ActorModel.getActors(None)
+  if actors != Nil then
+    actors.map(_.toString).foreach(println)
+  else
+    println("Keine Schauspieler verfügbar")
+}
 
 
 /**
