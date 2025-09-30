@@ -94,7 +94,24 @@ def showAllMovies(): Unit = {
  * @return Unit
  */
 def showMovieInformation(): Unit =
-  println("TODO")
+  println("Bitte geben Sie die Film-ID ein:")
+  val filmId = scala.io.StdIn.readInt()
+
+  // Get movie
+  val filter = (movie: Movie) => movie.id == filmId
+  val movieList = MovieModel.getMovies(Some(filter))
+  if movieList.isEmpty then {
+    println("Dieser Film existiert nicht.")
+    return;
+  }
+
+  // Show movie information
+  val movie = movieList.head
+  println(s"Film-ID: ${movie.id}")
+  println(s"Name: ${movie.name}")
+  println(s"Erscheinungsjahr: ${movie.releaseYear}")
+  println(f"Budget in Millionen USD: ${movie.budgetInMillions}%.2f")
+
 
 
 /**
