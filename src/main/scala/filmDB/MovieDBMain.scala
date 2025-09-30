@@ -7,6 +7,7 @@ import models.ActorModel
 
 import scala.language.postfixOps;
 import java.lang.Double.parseDouble
+import java.lang.Integer.parseInt
 
 /**
  * Main function
@@ -272,8 +273,25 @@ def showActorInformation(): Unit = {
  * TODO: Add an actor
  * @return Unit
  */
-def addActor(): Unit =
-  println("TODO")
+def addActor(): Unit = {
+  println("Schauspieler hinzufügen")
+  println("Geben sie die Schauspieler-ID ein:")
+  val actorId = scala.io.StdIn.readInt()
+
+  println("Geben Sie den Namen des Schauspielers ein:")
+  val actorName = scala.io.StdIn.readLine()
+
+  println("Geben Sie das Geburtsdatum des Schauspielers ein:")
+  val actorBornYear = scala.io.StdIn.readInt()
+
+  println("Geben Sie das Todesjahr des Schauspielers ein (leer lassen, falls er noch lebt):")
+  val actorDiedYearInput = scala.io.StdIn.readLine()
+  var actorDiedYear: Option[Int] = None
+  if actorDiedYearInput.nonEmpty then actorDiedYear = Some(parseInt(actorDiedYearInput))
+  
+  // Add actor
+  ActorModel.addActor(actorId, actorName, actorBornYear, actorDiedYear)
+}
 
 
 /**
