@@ -10,7 +10,6 @@ import scala.collection.mutable.ListBuffer
  */
 object MovieModel {
   private val movies: ListBuffer[Movie] = ListBuffer()
-  private var autoIncrement: Int = 0
 
 
 
@@ -50,6 +49,7 @@ object MovieModel {
       case None => this.movies.empty
       case Some(f) => this.movies.dropWhileInPlace(f)
 
+  
 
   /**
    * Edit a movie by a filter
