@@ -1,6 +1,7 @@
 package filmDB.models
 
 import filmDB.datatypes.Actor
+import scala.collection.mutable.ListBuffer
 
 object ActorModel {
     private val actors: ListBuffer[Actor] = ListBuffer()
@@ -14,9 +15,10 @@ object ActorModel {
    * @param diedYear
    * @return Int
    */
-  def addActor(id: Int, name: String, bornYear: Int, diedYear: Option[Int]): Int =
+  def addActor(id: Int, name: String, bornYear: Int, diedYear: Option[Int]): Int = {
     this.actors.addOne(Actor(id, name, bornYear, diedYear))
     id
+  }
 
   
 

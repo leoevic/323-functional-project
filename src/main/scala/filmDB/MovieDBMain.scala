@@ -1,6 +1,9 @@
 package filmDB
 
-
+import datatypes.Movie;
+import datatypes.Actor;
+import models.MovieModel;
+import models.ActorModel;
 
 /**
  * Main function
@@ -32,10 +35,13 @@ package filmDB
       case 9 => editActor()
       case 10 => deleteActor()
 
-      case 11 => open = false
+      case 11 => exitApp()
 
-  // Give polite farewell to user :-)
-  println("Bye")
+      // Wait until user presses enter to continue
+      println("Drücken Sie die Eingabetaste, um fortzufahren")
+      scala.io.StdIn.readLine()
+
+
 
 
 
@@ -68,11 +74,17 @@ def menu(): Int =
 
 
 /**
- * TODO: Show all movies
+ * Show all movies
  * @return Unit
  */
-def showAllMovies(): Unit =
-  println("TODO")
+def showAllMovies(): Unit = {
+  println("Übersicht über alle Filme")
+  val moviesAsString = MovieModel.getMovies(None).map(_.toString)
+  if moviesAsString != Nil then
+    moviesAsString.foreach(println)
+  else
+    println("Keine Filme verfügbar")
+}
 
 
 /**
@@ -155,5 +167,17 @@ def deleteActor(): Unit =
 def clearScreen(): Unit =
   for
     i <- 1 to 50
-  do
+  do {
     println("")
+  }
+
+
+
+/**
+ * Exit the application
+ * @return Unit
+ */
+def exitApp(): Unit =
+  // Give polite farewell to user :-)
+  println("Bye")
+  sys.exit
