@@ -243,11 +243,29 @@ def showAllActors(): Unit = {
 
 
 /**
- * TODO: Show information about a specific actor
+ * Show information about a specific actor
  * @return Unit
  */
-def showActorInformation(): Unit =
-  println("TODO")
+def showActorInformation(): Unit = {
+  println("Bitte geben Sie die Schauspieler-ID ein:")
+  val actorId = scala.io.StdIn.readInt()
+
+  // Get actor
+  val filter = (actor: Actor) => actor.id == actorId
+  val actorList = ActorModel.getActors(Some(filter))
+  if actorList.isEmpty then {
+    println("Dieser Schauspieler existiert nicht.")
+    return
+  }
+
+  // Show actor information
+  val actor = actorList.head
+  println(s"Schauspieler-ID: ${actor.id}")
+  println(s"Name: ${actor.name}")
+  println(s"Geburtsjahr: ${actor.bornYear}")
+  if actor.diedYear.nonEmpty then
+    println(s"Todesjahr: ${actor.diedYear.get}")
+}
 
 
 /**
