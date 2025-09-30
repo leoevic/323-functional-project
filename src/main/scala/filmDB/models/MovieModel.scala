@@ -48,7 +48,7 @@ object MovieModel {
   def deleteMovie(filter: Option[(Movie => Boolean)]): Unit =
     filter match
       case None => this.movies.empty
-      case Some(f) => this.movies.dropWhile(f)
+      case Some(f) => this.movies.dropWhileInPlace(f)
 
 
   /**

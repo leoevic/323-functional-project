@@ -136,11 +136,30 @@ def editMovie(): Unit =
 
 
 /**
- * TODO: Delete a movie
+ * Delete a movie
  * @return Unit
  */
 def deleteMovie(): Unit =
-  println("TODO")
+  // First, get all movies
+  val movies = MovieModel.getMovies(None)
+  if movies == Nil then {
+    println("Es existieren keine Filme, die gelöscht werden können")
+    return
+  }
+
+  // Ask for the movie id
+  println("Bitte wählen Sie den Film aus, der gelöscht werden soll:")
+  val filmId = scala.io.StdIn.readInt()
+  val filter = (movie: Movie) => movie.id == filmId
+
+  // Delete all movies
+  MovieModel.deleteMovie(Some(filter))
+
+  // Get difference of movies
+  val newMovies = MovieModel.getMovies(None)
+  val difference = movies.length - newMovies.length
+
+  println(s"Es wurden ${difference} Filme gelöscht.")
 
 
 /**
