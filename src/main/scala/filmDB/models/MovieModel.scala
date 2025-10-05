@@ -2,6 +2,7 @@ package filmDB.models
 
 import filmDB.datatypes.Movie
 
+import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
 
@@ -65,4 +66,19 @@ object MovieModel {
         else movie
       }
   }
+
+
+
+  /**
+   * Get the total cost of all movies
+   * Tail-Recursive function
+   * @return BigDecimal
+   */
+  def getTotalMovieCosts(): BigDecimal =
+    @tailrec
+    def getTotalMovieCosts(movies: List[Movie], acc: BigDecimal): BigDecimal =
+      movies match
+        case Nil => acc
+        case head :: tail => getTotalMovieCosts(tail, acc + head.budgetInMillions)
+    getTotalMovieCosts(getMovies(None), 0)
 }

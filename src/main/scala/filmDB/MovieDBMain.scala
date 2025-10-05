@@ -32,14 +32,15 @@ import java.lang.Integer.parseInt
       case 3 => addMovie()
       case 4 => editMovie()
       case 5 => deleteMovie()
+      case 6 => getTotalMovieCosts()
 
-      case 6 => showAllActors()
-      case 7 => showActorInformation()
-      case 8 => addActor()
-      case 9 => editActor()
-      case 10 => deleteActor()
+      case 7 => showAllActors()
+      case 8 => showActorInformation()
+      case 9 => addActor()
+      case 10 => editActor()
+      case 11 => deleteActor()
 
-      case 11 => exitApp()
+      case 12 => exitApp()
 
       // Wait until user presses enter to continue
       println("Drücken Sie die Eingabetaste, um fortzufahren")
@@ -60,14 +61,15 @@ def menu(): Int =
   println("3) Film hinzufügen")
   println("4) Film bearbeiten")
   println("5) Film löschen")
+  println("6) Kosten für alle Filme anzeigen")
 
-  println("6) Alle Schauspieler anzeigen")
-  println("7) Informationen über einen Schauspieler anzeigen")
-  println("8) Schauspieler hinzufügen")
-  println("9) Schauspieler bearbeiten")
-  println("10) Schauspieler löschen")
+  println("7) Alle Schauspieler anzeigen")
+  println("8) Informationen über einen Schauspieler anzeigen")
+  println("9) Schauspieler hinzufügen")
+  println("10) Schauspieler bearbeiten")
+  println("11) Schauspieler löschen")
 
-  println("11) Anwendung beenden")
+  println("12) Anwendung beenden")
 
   try
     scala.io.StdIn.readInt()
@@ -113,6 +115,16 @@ def showMovieInformation(): Unit =
   println(s"Name: ${movie.name}")
   println(s"Erscheinungsjahr: ${movie.releaseYear}")
   println(f"Budget in Millionen USD: ${movie.budgetInMillions}%.2f")
+
+  
+
+/**
+ * Get costs for all movies
+ * @return Unit
+ */
+def getTotalMovieCosts(): Unit =
+  val totalMovieCosts = MovieModel.getTotalMovieCosts()
+  println(f"Die Kosten für alle Filme betragen USD M${totalMovieCosts}%.2f")
 
 
 
