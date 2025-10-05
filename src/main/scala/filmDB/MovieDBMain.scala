@@ -270,7 +270,7 @@ def showActorInformation(): Unit = {
 
 
 /**
- * TODO: Add an actor
+ * Add an actor
  * @return Unit
  */
 def addActor(): Unit = {
@@ -295,11 +295,58 @@ def addActor(): Unit = {
 
 
 /**
- * TODO: Edit an actor
+ * Edit an actor
  * @return Unit
  */
 def editActor(): Unit =
-  println("TODO")
+  println("Bitte geben Sie die Schauspieler-ID ein:")
+  val actorId = scala.io.StdIn.readInt()
+  
+  // Get actor
+  val filter = (actor: Actor) => actor.id == actorId
+  val actorList = ActorModel.getActors(Some(filter))
+  if actorList.isEmpty then {
+    println("Dieser Schauspieler existiert nicht.")
+    return
+  }
+  
+  // Get the actor itself
+  val actorCurrent = actorList.head
+  
+  // Show current actor information
+  println("Bisherige Schauspieler-Informationen")
+  println(s"Name: ${actorCurrent.name}")
+  println(s"Geburtsjahr: ${actorCurrent.bornYear}")
+  if actorCurrent.diedYear != None then {
+    println(s"Todesjahr: ${actorCurrent.diedYear.get}")
+  }
+  
+  // Edit info
+  // Name
+  println("Neuer Name (Leer lassen für keine Änderung)")
+  var newActorName = scala.io.StdIn.readLine()
+  if newActorName.isEmpty then
+    newActorName = actorCurrent.name
+    
+  // Born year
+  println("Neues Geburtsjahr (Leer lassen für keine Änderung)")
+  var newActorBornYearInput = scala.io.StdIn.readLine()
+  var newActorBornYear: Int = 0
+  if newActorBornYearInput.nonEmpty then
+    newActorBornYear = newActorBornYearInput.toInt
+  else
+    newActorBornYear = actorCurrent.bornYear
+    
+  // Died year
+  println("Neues Todesjahr (Leer lassen, falls er noch lebt)")
+  var newActorDiedYearInput = scala.io.StdIn.readLine()
+  var newActorDiedYear: Option[Int] = None
+  if newActorDiedYearInput.nonEmpty then
+    newActorDiedYear = Some(newActorDiedYearInput.toInt)
+    
+  // Overwrite the actor
+  ActorModel.editActor(Actor(actorId, newActorName, newActorBornYear, newActorDiedYear), Some(filter))
+    
 
 
 /**
