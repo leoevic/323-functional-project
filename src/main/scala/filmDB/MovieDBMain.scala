@@ -219,7 +219,7 @@ def deleteMovie(): Unit =
   val filmId = scala.io.StdIn.readInt()
   val filter = (movie: Movie) => movie.id == filmId
 
-  // Delete all movies
+  // Delete all movies that apply for the filter
   MovieModel.deleteMovie(Some(filter))
 
   // Get difference of movies
@@ -303,11 +303,30 @@ def editActor(): Unit =
 
 
 /**
- * TODO: Delete an actor
+ * Delete an actor
  * @return Unit
  */
 def deleteActor(): Unit =
-  println("TODO")
+  // First, get all actors
+  val actors = ActorModel.getActors(None)
+  if actors == Nil then {
+    println("Es existieren kene Schauspieler, die gelöscht werden können")
+    return
+  }
+  
+  // Ask for actor id
+  println("Bitte wählen Sie den Schauspieler aus, der gelöscht werden soll:")
+  val actorId = scala.io.StdIn.readInt()
+  val filter = (actor: Actor) => actor.id == actorId
+  
+  // Delete all actors that apply to the filter
+  ActorModel.deleteActor(Some(filter))
+  
+  // Get difference of actors
+  val newActors = ActorModel.getActors(None)
+  val difference = actors.length - newActors.length
+  
+  println(s"Es wurden ${difference} Schauspieler gelöscht.")
 
 
 
