@@ -293,13 +293,20 @@ def addActor(): Unit = {
   println("Geben Sie den Namen des Schauspielers ein:")
   val actorName = scala.io.StdIn.readLine()
 
-  println("Geben Sie das Geburtsdatum des Schauspielers ein:")
+  println("Geben Sie das Geburtsjahr des Schauspielers ein:")
   val actorBornYear = scala.io.StdIn.readInt()
 
   println("Geben Sie das Todesjahr des Schauspielers ein (leer lassen, falls er noch lebt):")
   val actorDiedYearInput = scala.io.StdIn.readLine()
   var actorDiedYear: Option[Int] = None
   if actorDiedYearInput.nonEmpty then actorDiedYear = Some(parseInt(actorDiedYearInput))
+  
+  // Check whether an actor with the same id already exists
+  val actorFilter = (actor: Actor) => actor.id == actorId
+  if ActorModel.getActors(Some(actorFilter)).nonEmpty then {
+    Console.err.println("Es existiert bereits ein Schauspieler mit dieser ID")
+    return
+  }
   
   // Add actor
   ActorModel.addActor(actorId, actorName, actorBornYear, actorDiedYear)
